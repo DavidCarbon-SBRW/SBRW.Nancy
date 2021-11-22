@@ -189,9 +189,8 @@ namespace SBRW.Nancy.Diagnostics
 
             if (resolveResult.After != null)
             {
-                /* Modified 11/22/2021 by @DavidCarbon 
-                var AwaitResolveResult = resolveResult.After.Invoke(ctx, CancellationToken); */
-                resolveResult.After.Invoke(ctx, CancellationToken);
+                /* Modified 11/22/2021 by @DavidCarbon */
+                var TaskResolveResult = resolveResult.After.Invoke(ctx, CancellationToken);
             }
 
             AddUpdateSessionCookie(session, ctx, diagnosticsConfiguration, serializer);
