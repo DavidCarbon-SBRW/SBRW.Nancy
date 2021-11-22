@@ -3,7 +3,7 @@
     /// <summary>
     /// A dummy diagnostic provider for testing purposes.
     /// </summary>
-    /// <seealso cref="Nancy.Diagnostics.IDiagnosticsProvider" />
+    /// <seealso cref="SBRW.Nancy.Diagnostics.IDiagnosticsProvider" />
     public class TestingDiagnosticProvider : IDiagnosticsProvider
     {
         private readonly object diagObject;

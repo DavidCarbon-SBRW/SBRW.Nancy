@@ -5,7 +5,7 @@
     /// <summary>
     /// Abstract base class for Nancy diagnostics module.
     /// </summary>
-    /// <seealso cref="Nancy.NancyModule" />
+    /// <seealso cref="SBRW.Nancy.NancyModule" />
     public abstract class DiagnosticModule : NancyModule
     {
         private readonly INancyEnvironment environment;

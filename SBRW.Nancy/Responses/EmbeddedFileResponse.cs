@@ -11,7 +11,7 @@
     /// <summary>
     /// Represent an HTML response with embeded file content.
     /// </summary>
-    /// <seealso cref="Nancy.Response" />
+    /// <seealso cref="SBRW.Nancy.Response" />
     public class EmbeddedFileResponse : Response
     {
         private static readonly byte[] ErrorText;

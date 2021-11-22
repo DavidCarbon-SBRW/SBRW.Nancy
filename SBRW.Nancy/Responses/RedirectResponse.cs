@@ -2,8 +2,8 @@ namespace SBRW.Nancy.Responses
 {
     /// <summary>
     /// A response representing an HTTP redirect
-    /// <seealso cref="Nancy.Extensions.ContextExtensions.ToFullPath"/>
-    /// <seealso cref="Nancy.Extensions.ContextExtensions.GetRedirect"/>
+    /// <seealso cref="SBRW.Nancy.Extensions.ContextExtensions.ToFullPath"/>
+    /// <seealso cref="SBRW.Nancy.Extensions.ContextExtensions.GetRedirect"/>
     /// </summary>
     public class RedirectResponse : Response
     {

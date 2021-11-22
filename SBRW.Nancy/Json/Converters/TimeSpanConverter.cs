@@ -6,7 +6,7 @@ namespace SBRW.Nancy.Json.Converters
     /// <summary>
     /// Converts a dictionary with time info into a time span instance or vice versa.
     /// </summary>
-    /// <seealso cref="Nancy.Json.JavaScriptConverter" />
+    /// <seealso cref="SBRW.Nancy.Json.JavaScriptConverter" />
     public class TimeSpanConverter : JavaScriptConverter
     {
         /// <summary>

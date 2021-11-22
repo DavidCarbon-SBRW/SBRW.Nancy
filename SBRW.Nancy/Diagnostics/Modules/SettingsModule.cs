@@ -10,7 +10,7 @@
     /// <summary>
     /// Nancy module for diagnostic settings.
     /// </summary>
-    /// <seealso cref="Nancy.Diagnostics.DiagnosticModule" />
+    /// <seealso cref="SBRW.Nancy.Diagnostics.DiagnosticModule" />
     public class SettingsModule : DiagnosticModule
     {
         private static readonly IEnumerable<Type> Types = new[] { typeof(StaticConfiguration) }.Union(

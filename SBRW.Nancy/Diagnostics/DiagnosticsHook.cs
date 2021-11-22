@@ -90,7 +90,7 @@ namespace SBRW.Nancy.Diagnostics
 
                         if (ctx.Request.Path.StartsWith(resourcePrefix, StringComparison.OrdinalIgnoreCase))
                         {
-                            var resourceNamespace = "Nancy.Diagnostics.Resources";
+                            var resourceNamespace = "SBRW.Nancy.Diagnostics.Resources";
 
                             var path = Path.GetDirectoryName(ctx.Request.Url.Path.Replace(resourcePrefix, string.Empty)) ?? string.Empty;
                             if (!string.IsNullOrEmpty(path))
@@ -190,7 +190,7 @@ namespace SBRW.Nancy.Diagnostics
             if (resolveResult.After != null)
             {
                 /* Modified 11/22/2021 by @DavidCarbon */
-                var TaskResolveResult = resolveResult.After.Invoke(ctx, CancellationToken);
+                _ = resolveResult.After.Invoke(ctx, CancellationToken);
             }
 
             AddUpdateSessionCookie(session, ctx, diagnosticsConfiguration, serializer);

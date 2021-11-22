@@ -3,7 +3,7 @@
     /// <summary>
     /// Main Nancy module for diagnostics.
     /// </summary>
-    /// <seealso cref="Nancy.Diagnostics.DiagnosticModule" />
+    /// <seealso cref="SBRW.Nancy.Diagnostics.DiagnosticModule" />
     public class MainModule : DiagnosticModule
     {
         /// <summary>

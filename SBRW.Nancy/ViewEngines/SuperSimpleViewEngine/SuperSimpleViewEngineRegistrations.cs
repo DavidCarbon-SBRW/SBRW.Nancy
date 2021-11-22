@@ -13,7 +13,7 @@
 
         /// <summary>
         /// Initializes a new instance of the
-        /// <see cref="Nancy.ViewEngines.SuperSimpleViewEngine.SuperSimpleViewEngineRegistrations"/> class.
+        /// <see cref="SBRW.Nancy.ViewEngines.SuperSimpleViewEngine.SuperSimpleViewEngineRegistrations"/> class.
         /// </summary>
         /// <param name="typeCatalog">Type catalog.</param>
         public SuperSimpleViewEngineRegistrations (ITypeCatalog typeCatalog)

@@ -7,7 +7,7 @@ namespace SBRW.Nancy.Session
     /// <summary>
     /// Provides a dummy session instance with no functionality.
     /// </summary>
-    /// <seealso cref="Nancy.Session.ISession" />
+    /// <seealso cref="SBRW.Nancy.Session.ISession" />
     public class NullSessionProvider : ISession
     {
         /// <summary>

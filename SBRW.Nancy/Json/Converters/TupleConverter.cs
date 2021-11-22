@@ -8,7 +8,7 @@
     /// <summary>
     /// Converts a dictionary into a list of tuples.
     /// </summary>
-    /// <seealso cref="Nancy.Json.JavaScriptConverter" />
+    /// <seealso cref="SBRW.Nancy.Json.JavaScriptConverter" />
     public class TupleConverter : JavaScriptConverter
     {
         /// <summary>

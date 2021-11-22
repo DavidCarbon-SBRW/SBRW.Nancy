@@ -3,7 +3,7 @@
     /// <summary>
     /// Not Found response
     /// </summary>
-    /// <seealso cref="Nancy.Response" />
+    /// <seealso cref="SBRW.Nancy.Response" />
     public class NotFoundResponse : Response
     {
         /// <summary>

@@ -7,7 +7,7 @@ namespace SBRW.Nancy.Responses.Negotiation
     /// <summary>
     /// Request response content negotiator.
     /// </summary>
-    /// <seealso cref="Nancy.IHideObjectMembers" />
+    /// <seealso cref="SBRW.Nancy.IHideObjectMembers" />
     public class Negotiator : IHideObjectMembers
     {
         // TODO - this perhaps should be an interface, along with the view thing above

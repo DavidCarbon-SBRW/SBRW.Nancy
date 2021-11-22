@@ -6,7 +6,7 @@
     /// <summary>
     /// Nancy module for request tracing. Part of diagnostics module.
     /// </summary>
-    /// <seealso cref="Nancy.Diagnostics.DiagnosticModule" />
+    /// <seealso cref="SBRW.Nancy.Diagnostics.DiagnosticModule" />
     public class TraceModule : DiagnosticModule
     {
         private readonly IRequestTracing sessionProvider;

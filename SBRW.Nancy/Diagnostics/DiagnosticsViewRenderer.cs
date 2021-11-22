@@ -69,7 +69,7 @@ namespace SBRW.Nancy.Diagnostics
 
         private static Stream GetBodyStream(string name)
         {
-            var view = new EmbeddedFileResponse(typeof(DiagnosticsViewRenderer).GetTypeInfo().Assembly, "Nancy.Diagnostics.Views", name);
+            var view = new EmbeddedFileResponse(typeof(DiagnosticsViewRenderer).GetTypeInfo().Assembly, "SBRW.Nancy.Diagnostics.Views", name);
 
             var stream = new MemoryStream();
 

@@ -14,7 +14,7 @@
     /// <summary>
     /// The information module for diagnostics.
     /// </summary>
-    /// <seealso cref="Nancy.Diagnostics.DiagnosticModule" />
+    /// <seealso cref="SBRW.Nancy.Diagnostics.DiagnosticModule" />
     public class InfoModule : DiagnosticModule
     {
         private readonly ITypeCatalog typeCatalog;
@@ -84,7 +84,7 @@
             var name = this.assemblyCatalog
                 .GetAssemblies()
                 .Select(asm => asm.GetName())
-                .FirstOrDefault(asmName => asmName.Name != null && asmName.Name.StartsWith("Nancy.Bootstrappers."));
+                .FirstOrDefault(asmName => asmName.Name != null && asmName.Name.StartsWith("SBRW.Nancy.Bootstrappers."));
 
             return (name == null) ?
                 "TinyIoC" :
@@ -96,7 +96,7 @@
             var name = this.assemblyCatalog
                 .GetAssemblies()
                 .Select(asm => asm.GetName())
-                .FirstOrDefault(asmName => asmName.Name != null && asmName.Name.StartsWith("Nancy.Hosting."));
+                .FirstOrDefault(asmName => asmName.Name != null && asmName.Name.StartsWith("SBRW.Nancy.Hosting."));
 
             return (name == null) ?
                 "Unknown" :

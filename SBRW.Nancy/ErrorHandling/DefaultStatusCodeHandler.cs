@@ -144,7 +144,7 @@ namespace SBRW.Nancy.ErrorHandling
 
         private static string LoadResource(string filename)
         {
-            var resourceStream = typeof(INancyEngine).GetTypeInfo().Assembly.GetManifestResourceStream(string.Format("Nancy.ErrorHandling.Resources.{0}", filename));
+            var resourceStream = typeof(INancyEngine).GetTypeInfo().Assembly.GetManifestResourceStream(string.Format("SBRW.Nancy.ErrorHandling.Resources.{0}", filename));
 
 
             if (resourceStream == null)

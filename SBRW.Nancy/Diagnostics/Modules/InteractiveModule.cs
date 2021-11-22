@@ -10,7 +10,7 @@
     /// <summary>
     /// Nancy module for interactive diagnostics.
     /// </summary>
-    /// <seealso cref="Nancy.Diagnostics.DiagnosticModule" />
+    /// <seealso cref="SBRW.Nancy.Diagnostics.DiagnosticModule" />
     public class InteractiveModule : DiagnosticModule
     {
         private readonly IInteractiveDiagnostics interactiveDiagnostics;

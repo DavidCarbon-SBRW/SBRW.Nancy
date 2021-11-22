@@ -10,7 +10,7 @@
     /// <summary>
     /// Handles interactive diagnostic instances.
     /// </summary>
-    /// <seealso cref="Nancy.Diagnostics.IInteractiveDiagnostics" />
+    /// <seealso cref="SBRW.Nancy.Diagnostics.IInteractiveDiagnostics" />
     public class InteractiveDiagnostics : IInteractiveDiagnostics
     {
         private readonly IDiagnosticsProvider[] providers;

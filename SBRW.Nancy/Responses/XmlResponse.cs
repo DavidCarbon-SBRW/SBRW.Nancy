@@ -9,7 +9,7 @@
     /// Represents an HTTP response with XML content.
     /// </summary>
     /// <typeparam name="TModel">The type of the model.</typeparam>
-    /// <seealso cref="Nancy.Response" />
+    /// <seealso cref="SBRW.Nancy.Response" />
     public class XmlResponse<TModel> : Response
     {
         private readonly XmlConfiguration configuration;

@@ -5,7 +5,7 @@ namespace SBRW.Nancy.ViewEngines.SuperSimpleViewEngine
     /// <summary>
     /// Nancy view engine host
     /// </summary>
-    /// <seealso cref="Nancy.ViewEngines.SuperSimpleViewEngine.IViewEngineHost" />
+    /// <seealso cref="SBRW.Nancy.ViewEngines.SuperSimpleViewEngine.IViewEngineHost" />
     public class NancyViewEngineHost : IViewEngineHost
     {
         private IRenderContext renderContext;

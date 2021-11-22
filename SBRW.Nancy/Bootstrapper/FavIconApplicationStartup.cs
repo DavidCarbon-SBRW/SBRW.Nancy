@@ -50,7 +50,7 @@
         private static byte[] ExtractDefaultIcon()
         {
             var resourceStream =
-                typeof(INancyEngine).GetTypeInfo().Assembly.GetManifestResourceStream("Nancy.favicon.ico");
+                typeof(INancyEngine).GetTypeInfo().Assembly.GetManifestResourceStream("SBRW.Nancy.favicon.ico");
 
 
             if (resourceStream == null)

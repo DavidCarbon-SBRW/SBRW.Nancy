@@ -30,7 +30,7 @@ namespace SBRW.Nancy
                 asm => asm.FullName.StartsWith("IronPython", StringComparison.Ordinal),
                 asm => asm.FullName.StartsWith("IronRuby", StringComparison.Ordinal),
                 asm => asm.FullName.StartsWith("xunit", StringComparison.Ordinal),
-                asm => asm.FullName.StartsWith("Nancy.Testing", StringComparison.Ordinal),
+                asm => asm.FullName.StartsWith("SBRW.Nancy.Testing", StringComparison.Ordinal),
                 asm => asm.FullName.StartsWith("MonoDevelop.NUnit", StringComparison.Ordinal),
                 asm => asm.FullName.StartsWith("SMDiagnostics", StringComparison.Ordinal),
                 asm => asm.FullName.StartsWith("CppCodeProvider", StringComparison.Ordinal),
