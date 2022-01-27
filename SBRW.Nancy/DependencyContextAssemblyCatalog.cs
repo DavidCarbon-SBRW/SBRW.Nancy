@@ -1,12 +1,12 @@
-#if !NETFRAMEWORK
+#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Extensions.DependencyModel;
+
 namespace SBRW.Nancy
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using Microsoft.Extensions.DependencyModel;
-
     /// <summary>
     /// Default implementation of the <see cref="IAssemblyCatalog"/> interface, based on
     /// retrieving <see cref="Assembly"/> information from <see cref="DependencyContext"/>.
@@ -45,13 +45,16 @@ namespace SBRW.Nancy
                 typeof (DependencyContextAssemblyCatalog).GetTypeInfo().Assembly
             };
 
-            foreach (var library in this.dependencyContext.RuntimeLibraries)
+            if (this.dependencyContext != null)
             {
-                if (IsReferencingNancy(library))
+                foreach (var library in this.dependencyContext.RuntimeLibraries)
                 {
-                    foreach (var assemblyName in library.GetDefaultAssemblyNames(this.dependencyContext))
+                    if (IsReferencingNancy(library))
                     {
-                        results.Add(SafeLoadAssembly(assemblyName));
+                        foreach (var assemblyName in library.GetDefaultAssemblyNames(this.dependencyContext))
+                        {
+                            results.Add(SafeLoadAssembly(assemblyName));
+                        }
                     }
                 }
             }

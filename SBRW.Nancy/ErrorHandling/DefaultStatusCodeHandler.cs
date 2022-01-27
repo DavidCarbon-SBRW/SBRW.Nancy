@@ -1,16 +1,16 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using SBRW.Nancy.Configuration;
+using SBRW.Nancy.Extensions;
+using SBRW.Nancy.IO;
+using SBRW.Nancy.Responses.Negotiation;
+using SBRW.Nancy.ViewEngines;
+
 namespace SBRW.Nancy.ErrorHandling
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
-    using SBRW.Nancy.Configuration;
-    using SBRW.Nancy.Extensions;
-    using SBRW.Nancy.IO;
-    using SBRW.Nancy.Responses.Negotiation;
-    using SBRW.Nancy.ViewEngines;
-
     /// <summary>
     /// Default error handler
     /// </summary>
@@ -157,13 +157,22 @@ namespace SBRW.Nancy.ErrorHandling
                 return reader.ReadToEnd();
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class DefaultStatusCodeHandlerResult
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public HttpStatusCode StatusCode { get; set; }
-
+            /// <summary>
+            /// 
+            /// </summary>
             public string Message { get; set; }
-
+            /// <summary>
+            /// 
+            /// </summary>
             public string Details { get; set; }
         }
     }

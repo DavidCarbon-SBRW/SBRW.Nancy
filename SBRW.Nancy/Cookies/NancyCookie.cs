@@ -68,13 +68,15 @@ namespace SBRW.Nancy.Cookies
         /// <param name="httpOnly">Whether the cookie is http only.</param>
         /// <param name="secure">Whether the cookie is secure (i.e. HTTPS only).</param>
         /// <param name="expires">The expiration date of the cookie. Can be <see langword="null" /> if it should expire at the end of the session.</param>
-        public NancyCookie(string name, string value, bool httpOnly, bool secure, DateTime? expires)
+        /// <param name="sameSite">The same site attribute of the cookie. Can be <see langword="null" />.</param>
+        public NancyCookie(string name, string value, bool httpOnly, bool secure, DateTime? expires = null, SameSite? sameSite = null)
         {
             this.Name = name;
             this.Value = value;
             this.HttpOnly = httpOnly;
             this.Secure = secure;
             this.Expires = expires;
+            this.SameSite = sameSite;
         }
 
         /// <summary>
@@ -136,6 +138,11 @@ namespace SBRW.Nancy.Cookies
         public bool Secure { get; private set; }
 
         /// <summary>
+        /// Wheather the cookie is same site
+        /// </summary>
+        public SameSite? SameSite { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
@@ -167,6 +174,11 @@ namespace SBRW.Nancy.Cookies
             if (HttpOnly)
             {
                 sb.Append("; HttpOnly");
+            }
+
+            if (SameSite.HasValue)
+            {
+                sb.Append("; samesite=").Append(SameSite.ToString());
             }
 
             return sb.ToString();
