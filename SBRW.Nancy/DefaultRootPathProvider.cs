@@ -1,7 +1,7 @@
-﻿namespace SBRW.Nancy
-{
-    using System;
+﻿using System;
 
+namespace SBRW.Nancy
+{
     /// <summary>
     /// Default implementation of <see cref="IRootPathProvider"/>.
     /// </summary>
@@ -13,7 +13,7 @@
         /// <returns>A <see cref="string"/> containing the path of the root folder.</returns>
         public string GetRootPath()
         {
-#if !NETFRAMEWORK
+#if NETSTANDARD2_0_OR_GREATER
             return Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath;
 #else
             return AppDomain.CurrentDomain.BaseDirectory;

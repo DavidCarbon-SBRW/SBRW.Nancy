@@ -3,10 +3,7 @@ using System.ComponentModel;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq.Expressions;
-using System.Reflection;
 using Microsoft.CSharp.RuntimeBinder;
-using Binder = Microsoft.CSharp.RuntimeBinder.Binder;
-using SBRW.Nancy.Extensions;
 
 namespace SBRW.Nancy
 {
@@ -64,7 +61,7 @@ namespace SBRW.Nancy
         /// <typeparam name="T">When no default value is supplied, required to supply the default type</typeparam>
         /// <param name="defaultValue">Optional parameter for default value, if not given it returns default of type T</param>
         /// <returns>If value is not null, value is returned, else default value is returned</returns>
-        public T Default<T>(T defaultValue = default(T))
+        public T Default<T>(T defaultValue = default)
         {
             if (this.HasValue)
             {
@@ -90,7 +87,7 @@ namespace SBRW.Nancy
         /// <typeparam name="T">When no default value is supplied, required to supply the default type</typeparam>
         /// <param name="defaultValue">Optional parameter for default value, if not given it returns default of type T</param>
         /// <returns>If value is not null, value is returned, else default value is returned</returns>
-        public T TryParse<T>(T defaultValue = default (T))
+        public T TryParse<T>(T defaultValue = default)
         {
             if (this.HasValue)
             {
@@ -108,9 +105,7 @@ namespace SBRW.Nancy
                     var stringValue = this.value as string;
                     if (parseType == typeof(DateTime))
                     {
-                        DateTime result;
-
-                        if (DateTime.TryParse(stringValue, CultureInfo.InvariantCulture, this.globalizationConfiguration.DateTimeStyles, out result))
+                        if (DateTime.TryParse(stringValue, CultureInfo.InvariantCulture, this.globalizationConfiguration.DateTimeStyles, out DateTime result))
                         {
                             return (T)((object)result);
                         }
@@ -151,7 +146,7 @@ namespace SBRW.Nancy
         /// <returns><see langword="true"/> if equal,<see langword="false"/> otherwise</returns>
         public static bool operator ==(DynamicDictionaryValue dynamicValue, object compareValue)
         {
-            if (ReferenceEquals(null, dynamicValue))
+            if (dynamicValue is null)
             {
                 return false;
             }
@@ -183,7 +178,7 @@ namespace SBRW.Nancy
         /// <param name="compareValue">An <see cref="DynamicDictionaryValue"/> to compare with this instance.</param>
         public bool Equals(DynamicDictionaryValue compareValue)
         {
-            if (ReferenceEquals(null, compareValue))
+            if (compareValue is null)
             {
                 return false;
             }
@@ -198,7 +193,7 @@ namespace SBRW.Nancy
         /// <param name="compareValue">The <see cref="object"/> to compare with the current <see cref="DynamicDictionaryValue"/>.</param>
         public override bool Equals(object compareValue)
         {
-            if (ReferenceEquals(null, compareValue))
+            if (compareValue is null)
             {
                 return false;
             }
@@ -217,7 +212,7 @@ namespace SBRW.Nancy
         /// <returns>A hash code for the current instance.</returns>
         public override int GetHashCode()
         {
-            return (this.value != null ? this.value.GetHashCode() : 0);
+            return this.value != null ? this.value.GetHashCode() : 0;
         }
 
         /// <summary>
@@ -227,7 +222,6 @@ namespace SBRW.Nancy
         /// <param name="binder">Provides information about the binary operation. The binder.Operation property returns an <see cref="T:System.Linq.Expressions.ExpressionType"/> object. For example, for the sum = first + second statement, where first and second are derived from the DynamicObject class, binder.Operation returns ExpressionType.Add.</param><param name="arg">The right operand for the binary operation. For example, for the sum = first + second statement, where first and second are derived from the DynamicObject class, <paramref name="arg"/> is equal to second.</param><param name="result">The result of the binary operation.</param>
         public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
         {
-            object resultOfCast;
             result = null;
 
             if (binder.Operation != ExpressionType.Equal)
@@ -238,7 +232,7 @@ namespace SBRW.Nancy
             var convert =
                 Binder.Convert(CSharpBinderFlags.None, arg.GetType(), typeof(DynamicDictionaryValue));
 
-            if (!this.TryConvert((ConvertBinder)convert, out resultOfCast))
+            if (!this.TryConvert((ConvertBinder)convert, out object resultOfCast))
             {
                 return false;
             }
@@ -273,8 +267,7 @@ namespace SBRW.Nancy
 
             if (binderType == typeof(Guid) || binderType == typeof(Guid?))
             {
-                Guid guid;
-                if (Guid.TryParse(Convert.ToString(this.value), out guid))
+                if (Guid.TryParse(Convert.ToString(this.value), out Guid guid))
                 {
                     result = guid;
                     return true;
@@ -282,17 +275,16 @@ namespace SBRW.Nancy
             }
             else if (binderType == typeof(TimeSpan) || binderType == typeof(TimeSpan?))
             {
-                TimeSpan timespan;
-                if (TimeSpan.TryParse(Convert.ToString(this.value), out timespan))
+                if (TimeSpan.TryParse(Convert.ToString(this.value), out TimeSpan timespan))
                 {
                     result = timespan;
                     return true;
                 }
             }
-            else if (binderType.GetTypeInfo().IsEnum)
+            else if (binderType.IsEnum)
             {
                 // handles enum to enum assignments
-                if (this.value.GetType().GetTypeInfo().IsEnum)
+                if (this.value.GetType().IsEnum)
                 {
                     if (binderType == this.value.GetType())
                     {
@@ -314,12 +306,12 @@ namespace SBRW.Nancy
             }
             else
             {
-                if (binderType.GetTypeInfo().IsGenericType && binderType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                if (binderType.IsGenericType && binderType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
                     binderType = binderType.GetGenericArguments()[0];
                 }
 
-                var typeCode = binderType.GetTypeCode();
+                var typeCode = Type.GetTypeCode(binderType);
 
                 if (typeCode == TypeCode.Object)
                 {
@@ -368,13 +360,21 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(bool?);
+                return null;
             }
 
-            return (bool)dynamicValue;
+            if (dynamicValue.value.GetType().IsValueType)
+            {
+                return Convert.ToBoolean(dynamicValue.value);
+            }
+
+            if (bool.TryParse(dynamicValue.ToString(), out bool result))
+            {
+                return result;
+            }
+
+            return true;
         }
-
-
 
         /// <summary>
         /// Performs an implicit conversion from <see cref="DynamicDictionaryValue"/> to <see cref="System.Boolean"/>.
@@ -390,13 +390,12 @@ namespace SBRW.Nancy
                 return false;
             }
 
-            if (dynamicValue.value.GetType().GetTypeInfo().IsValueType)
+            if (dynamicValue.value.GetType().IsValueType)
             {
-                return (Convert.ToBoolean(dynamicValue.value));
+                return Convert.ToBoolean(dynamicValue.value);
             }
 
-            bool result;
-            if (bool.TryParse(dynamicValue.ToString(), out result))
+            if (bool.TryParse(dynamicValue.ToString(), out bool result))
             {
                 return result;
             }
@@ -431,10 +430,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(int?);
+                return null;
             }
 
-            return (int)dynamicValue;
+            return int.Parse(dynamicValue.ToString());
         }
 
 
@@ -449,10 +448,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(int);
+                return default;
             }
 
-            if (dynamicValue.value.GetType().GetTypeInfo().IsValueType)
+            if (dynamicValue.value.GetType().IsValueType)
             {
                 return Convert.ToInt32(dynamicValue.value);
             }
@@ -472,10 +471,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(Guid?);
+                return null;
             }
 
-            return (Guid)dynamicValue;
+            return Guid.Parse(dynamicValue.ToString());
         }
 
 
@@ -490,7 +489,7 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(Guid);
+                return default;
             }
 
             if (dynamicValue.value is Guid)
@@ -514,10 +513,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(DateTime?);
+                return null;
             }
 
-            return (DateTime)dynamicValue;
+            return DateTime.Parse(dynamicValue.ToString(), CultureInfo.InvariantCulture, dynamicValue.globalizationConfiguration.DateTimeStyles);
         }
 
 
@@ -533,7 +532,7 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(DateTime);
+                return default;
             }
 
             if (dynamicValue.value is DateTime)
@@ -556,10 +555,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(TimeSpan?);
+                return null;
             }
 
-            return (TimeSpan)dynamicValue;
+            return TimeSpan.Parse(dynamicValue.ToString());
         }
 
 
@@ -575,7 +574,7 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(TimeSpan);
+                return default;
             }
 
             if (dynamicValue.value is TimeSpan)
@@ -595,10 +594,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(long?);
+                return null;
             }
 
-            return (long)dynamicValue;
+            return long.Parse(dynamicValue.ToString());
         }
 
 
@@ -613,10 +612,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(long);
+                return default;
             }
 
-            if (dynamicValue.value.GetType().GetTypeInfo().IsValueType)
+            if (dynamicValue.value.GetType().IsValueType)
             {
                 return Convert.ToInt64(dynamicValue.value);
             }
@@ -637,10 +636,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(float?);
+                return null;
             }
 
-            return (float)dynamicValue;
+            return float.Parse(dynamicValue.ToString());
         }
 
 
@@ -656,10 +655,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(float);
+                return default;
             }
 
-            if (dynamicValue.value.GetType().GetTypeInfo().IsValueType)
+            if (dynamicValue.value.GetType().IsValueType)
             {
                 return Convert.ToSingle(dynamicValue.value);
             }
@@ -680,10 +679,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(decimal?);
+                return null;
             }
 
-            return (decimal)dynamicValue;
+            return decimal.Parse(dynamicValue.ToString());
         }
 
 
@@ -699,10 +698,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(decimal);
+                return default;
             }
 
-            if (dynamicValue.value.GetType().GetTypeInfo().IsValueType)
+            if (dynamicValue.value.GetType().IsValueType)
             {
                 return Convert.ToDecimal(dynamicValue.value);
             }
@@ -723,10 +722,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(double?);
+                return null;
             }
 
-            return (double)dynamicValue;
+            return double.Parse(dynamicValue.ToString());
         }
 
 
@@ -741,10 +740,10 @@ namespace SBRW.Nancy
         {
             if (!dynamicValue.HasValue)
             {
-                return default(double);
+                return default;
             }
 
-            if (dynamicValue.value.GetType().GetTypeInfo().IsValueType)
+            if (dynamicValue.value.GetType().IsValueType)
             {
                 return Convert.ToDouble(dynamicValue.value);
             }
@@ -768,7 +767,7 @@ namespace SBRW.Nancy
                 return TypeCode.Empty;
             }
 
-            return this.value.GetType().GetTypeCode();
+            return Type.GetTypeCode(this.value.GetType());
         }
 
         /// <summary>
