@@ -146,6 +146,8 @@ namespace SBRW.Nancy
         /// <summary>
         /// Adds headers to the response using anonymous types
         /// </summary>
+        /// <param name="response"></param>
+        /// <param name="headers">
         /// Enumerable of headers - each header should be a Tuple with two string elements
         /// for header name and header value
         /// </param>
@@ -158,6 +160,8 @@ namespace SBRW.Nancy
         /// <summary>
         /// Adds headers to the response using anonymous types
         /// </summary>
+        /// <param name="response"></param>
+        /// <param name="headers">
         /// Enumerable of headers - each header should be a Tuple with two string elements
         /// for header name and header value
         /// </param>
