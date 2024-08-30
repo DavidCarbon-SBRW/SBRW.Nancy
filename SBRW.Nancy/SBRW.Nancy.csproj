@@ -28,6 +28,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<!-- Required: Include symbols files if Self-Hosted Nuget Feed does not support symbol packages -->
 		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
