@@ -28,7 +28,11 @@
                 throw new ArgumentOutOfRangeException("salt", "salt must be at least 8 bytes in length");
             }
 
+#if NETSTANDARD2_0_OR_GREATER || NETFRAMEWORK
             this.provider = new Rfc2898DeriveBytes(passphrase, salt, iterations);
+#else
+            this.provider = new Rfc2898DeriveBytes(passphrase, salt, iterations, HashAlgorithmName.SHA512);
+#endif
         }
 
         /// <summary>

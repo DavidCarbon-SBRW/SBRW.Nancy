@@ -183,16 +183,18 @@ namespace SBRW.Nancy.Session
                 var newHmac = hmacProvider.GenerateHmac(encryptedCookie);
                 var hmacValid = HmacComparer.Compare(newHmac, hmacBytes, hmacProvider.HmacLength);
 
-                var data = encryptionProvider.Decrypt(encryptedCookie);
-                var parts = data.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var part in parts.Select(part => part.Split('=')).Where(part => part.Length == 2))
+                if (hmacValid)
                 {
-                    var valueObject = this.currentConfiguration.Serializer.Deserialize(HttpUtility.UrlDecode(part[1]));
+                    var data = encryptionProvider.Decrypt(encryptedCookie);
+                    var parts = data.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var part in parts.Select(part => part.Split('=')).Where(part => part.Length == 2))
+                    {
+                        var valueObject = this.currentConfiguration.Serializer.Deserialize(HttpUtility.UrlDecode(part[1]));
 
-                    dictionary[HttpUtility.UrlDecode(part[0])] = valueObject;
+                        dictionary[HttpUtility.UrlDecode(part[0])] = valueObject;
+                    }
                 }
-
-                if (!hmacValid)
+                else
                 {
                     dictionary.Clear();
                 }
