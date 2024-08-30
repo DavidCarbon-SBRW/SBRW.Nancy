@@ -16,7 +16,7 @@ namespace SBRW.Nancy
 #if NETSTANDARD2_0_OR_GREATER
             return Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath;
 #else
-            return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            return AppDomain.CurrentDomain.BaseDirectory;
 #endif
         }
     }

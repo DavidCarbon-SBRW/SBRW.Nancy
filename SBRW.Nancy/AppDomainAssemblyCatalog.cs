@@ -1,4 +1,4 @@
-#if NETFRAMEWORK
+#if NETFRAMEWORK || (NET5_0_OR_GREATER && WINDOWS)
 namespace SBRW.Nancy
 {
     using System;
@@ -54,8 +54,14 @@ namespace SBRW.Nancy
         private static IEnumerable<Assembly> LoadNancyReferencingAssemblies(IEnumerable<Assembly> loadedAssemblies)
         {
             var assemblies = new HashSet<Assembly>();
+
+#if NETFRAMEWORK
             var inspectionAppDomain = CreateInspectionAppDomain();
             var inspectionProber = CreateRemoteReferenceProber(inspectionAppDomain);
+#else
+            var inspectionProber = new ProxyNancyReferenceProber();
+#endif
+
             var loadedNancyReferencingAssemblyNames = loadedAssemblies.Select(assembly => assembly.GetName()).ToArray();
 
             foreach (var directory in GetAssemblyDirectories())
@@ -84,11 +90,14 @@ namespace SBRW.Nancy
                 }
             }
 
+#if NETFRAMEWORK
             AppDomain.Unload(inspectionAppDomain);
+#endif
 
             return assemblies.ToArray();
         }
 
+#if NETFRAMEWORK
         private static AppDomain CreateInspectionAppDomain()
         {
             var currentAppDomain = AppDomain.CurrentDomain;
@@ -103,22 +112,39 @@ namespace SBRW.Nancy
                 typeof(ProxyNancyReferenceProber).Assembly.FullName,
                 typeof(ProxyNancyReferenceProber).FullName);
         }
+#endif
+
+#if !NETFRAMEWORK
+        private static IEnumerable<string> GetPrivateBinPaths()
+        {
+            /* In .NET one can approximate PrivateBinPath by using additional probing paths or simply the base directory */
+            return new[] { AppContext.BaseDirectory };
+        }
+#endif
 
         private static IEnumerable<string> GetAssemblyDirectories()
         {
+#if NETFRAMEWORK
             var directories = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath != null
-                ? AppDomain.CurrentDomain.SetupInformation.PrivateBinPath.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                ? AppDomain.CurrentDomain.SetupInformation.PrivateBinPath.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
                 : new string[] { };
+#else
+            var directories = GetPrivateBinPaths();
+#endif
 
             foreach (var directory in directories.Where(directory => !string.IsNullOrWhiteSpace(directory)))
             {
                 yield return directory;
             }
 
+#if NETFRAMEWORK
             if (AppDomain.CurrentDomain.SetupInformation.PrivateBinPathProbe == null)
             {
                 yield return AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             }
+#else
+            yield return AppContext.BaseDirectory;
+#endif
         }
 
         private static AssemblyName SafeGetAssemblyName(string assemblyPath)

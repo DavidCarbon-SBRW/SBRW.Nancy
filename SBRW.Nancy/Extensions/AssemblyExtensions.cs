@@ -38,7 +38,7 @@ namespace SBRW.Nancy.Extensions
             return types;
         }
 
-#if NETFRAMEWORK
+#if NETFRAMEWORK || NET5_0_OR_GREATER
         /// <summary>
         /// Indicates if a given assembly references another which is identified by its name.
         /// </summary>

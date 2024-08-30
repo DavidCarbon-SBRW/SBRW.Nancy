@@ -1,4 +1,4 @@
-#if NETFRAMEWORK
+#if NETFRAMEWORK || NET5_0_OR_GREATER
 namespace SBRW.Nancy.Helpers
 {
     using System;
@@ -21,8 +21,11 @@ namespace SBRW.Nancy.Helpers
         /// <returns>A boolean value indicating if there is a reference.</returns>
         public bool HasReference(AssemblyName assemblyNameForProbing, AssemblyName referenceAssemblyName)
         {
+#if NETFRAMEWORK
             var assemblyForInspection = Assembly.ReflectionOnlyLoad(assemblyNameForProbing.Name);
-
+#else
+            var assemblyForInspection = Assembly.Load(assemblyNameForProbing.Name);
+#endif
             return assemblyForInspection.IsReferencing(referenceAssemblyName);
         }
     }

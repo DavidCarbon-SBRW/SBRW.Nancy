@@ -91,7 +91,7 @@
         {
             get {
                 return this.assemblyCatalog ?? (
-#if NETFRAMEWORK
+#if NETFRAMEWORK || (NET5_0_OR_GREATER && WINDOWS)
                     this.assemblyCatalog = new AppDomainAssemblyCatalog()
 #else
                     this.assemblyCatalog = new DependencyContextAssemblyCatalog()
