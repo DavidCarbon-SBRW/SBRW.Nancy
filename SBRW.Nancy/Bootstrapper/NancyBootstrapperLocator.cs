@@ -55,10 +55,10 @@
 
         private static IAssemblyCatalog GetAssemblyCatalog()
         {
-#if !NETFRAMEWORK
-            return new DependencyContextAssemblyCatalog();
-#else
+#if NETFRAMEWORK
             return new AppDomainAssemblyCatalog();
+#else
+            return new DependencyContextAssemblyCatalog();
 #endif
         }
 

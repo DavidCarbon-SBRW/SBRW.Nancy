@@ -78,7 +78,7 @@ namespace SBRW.Nancy.Bootstrapper
                     ViewLocator = typeof(DefaultViewLocator),
                     ViewFactory = typeof(DefaultViewFactory),
                     ViewResolver = typeof(DefaultViewResolver),
-                    ViewCache = typeof(DefaultViewCache),
+                    ViewCache = typeof(ThreadSafeViewCache),
                     ViewLocationProvider = typeof(FileSystemViewLocationProvider),
                 };
             }
