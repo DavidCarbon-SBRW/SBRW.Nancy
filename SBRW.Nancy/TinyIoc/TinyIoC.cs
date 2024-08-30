@@ -594,7 +594,9 @@ namespace SBRW.Nancy.TinyIoc
         }
 #if SERIALIZABLE
         protected TinyIoCResolutionException(SerializationInfo info, StreamingContext context)
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             : base(info, context)
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         {
         }
 #endif
@@ -622,7 +624,9 @@ namespace SBRW.Nancy.TinyIoc
         }
 #if SERIALIZABLE
         protected TinyIoCRegistrationTypeException(SerializationInfo info, StreamingContext context)
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             : base(info, context)
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         {
         }
 #endif
@@ -661,7 +665,9 @@ namespace SBRW.Nancy.TinyIoc
         }
 #if SERIALIZABLE
         protected TinyIoCRegistrationException(SerializationInfo info, StreamingContext context)
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             : base(info, context)
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         {
         }
 #endif
@@ -689,7 +695,9 @@ namespace SBRW.Nancy.TinyIoc
         }
 #if SERIALIZABLE
         protected TinyIoCWeakReferenceException(SerializationInfo info, StreamingContext context)
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             : base(info, context)
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         {
         }
 #endif
@@ -727,7 +735,9 @@ namespace SBRW.Nancy.TinyIoc
         }
 #if SERIALIZABLE
         protected TinyIoCConstructorResolutionException(SerializationInfo info, StreamingContext context)
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             : base(info, context)
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         {
         }
 #endif
@@ -755,7 +765,9 @@ namespace SBRW.Nancy.TinyIoc
         }
 #if SERIALIZABLE
         protected TinyIoCAutoRegistrationException(SerializationInfo info, StreamingContext context)
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             : base(info, context)
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         {
         }
 #endif

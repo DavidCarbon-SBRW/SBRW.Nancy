@@ -35,7 +35,9 @@
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
         /// <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
         protected BootstrapperException(SerializationInfo info, StreamingContext context)
+#pragma warning disable SYSLIB0051 // https://github.com/dotnet/docs/issues/34893
             : base(info, context)
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         {
         }
 #endif
