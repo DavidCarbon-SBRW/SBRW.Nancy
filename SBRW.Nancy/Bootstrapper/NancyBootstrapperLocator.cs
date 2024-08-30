@@ -55,14 +55,14 @@
 
         private static IAssemblyCatalog GetAssemblyCatalog()
         {
-#if NETFRAMEWORK
+#if NETFRAMEWORK || (NET5_0_OR_GREATER && WINDOWS)
             return new AppDomainAssemblyCatalog();
 #else
             return new DependencyContextAssemblyCatalog();
 #endif
         }
 
-#if NETFRAMEWORK
+#if NETFRAMEWORK || (NET5_0_OR_GREATER && WINDOWS)
         private static bool IsNancyReferencing(Assembly assembly)
         {
             if (AssemblyName.ReferenceMatchesDefinition(assembly.GetName(), NancyAssemblyName))
