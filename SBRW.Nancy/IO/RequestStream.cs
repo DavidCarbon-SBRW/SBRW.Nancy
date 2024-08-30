@@ -11,6 +11,14 @@
     /// </summary>
     public class RequestStream : Stream
     {
+        /// <summary>
+        /// (Parent) Sub Directory Name in Temp Folder 
+        /// </summary>
+        private static string TEMP_PARENT_FOLDER_NAME = "Soapbox Race World";
+        /// <summary>
+        /// (Child) Sub Directory Name in Temp Folder 
+        /// </summary>
+        private static string TEMP_CHILD_FOLDER_NAME = "Nancy";
         internal const int BufferSize = 4096;
 
         /// <summary>
@@ -406,7 +414,24 @@
             // comments on Win32 implementation: https://msdn.microsoft.com/en-us/library/windows/desktop/aa364991(v=vs.85).aspx
             // mono implementation: https://github.com/mono/mono/blob/master/mcs/class/corlib/System.IO/Path.cs#L490
 
-            var filePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".tmp");
+            string filePath = string.Empty;
+
+            try
+            {
+                string directoryPath = Path.Combine(Path.GetTempPath(), TEMP_PARENT_FOLDER_NAME, TEMP_CHILD_FOLDER_NAME);
+
+                // If the Directory does not exist, go ahead and create one
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                filePath = Path.Combine(directoryPath, Guid.NewGuid().ToString("N") + ".tmp");
+            }
+            catch
+            {
+                filePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".tmp");
+            }
 
             return new FileStream(
                 filePath,
