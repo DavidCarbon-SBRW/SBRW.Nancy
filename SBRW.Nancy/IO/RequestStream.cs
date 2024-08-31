@@ -418,15 +418,21 @@
 
             try
             {
-                string directoryPath = Path.Combine(Path.GetTempPath(), TEMP_PARENT_FOLDER_NAME, TEMP_CHILD_FOLDER_NAME);
+                string directoryParentPath = Path.Combine(Path.GetTempPath(), TEMP_PARENT_FOLDER_NAME);
+                string directoryChildPath = Path.Combine(directoryParentPath, TEMP_CHILD_FOLDER_NAME);
 
                 // If the Directory does not exist, go ahead and create one
-                if (!Directory.Exists(directoryPath))
+                if (!Directory.Exists(directoryParentPath))
                 {
-                    Directory.CreateDirectory(directoryPath);
+                    Directory.CreateDirectory(directoryParentPath);
                 }
 
-                filePath = Path.Combine(directoryPath, Guid.NewGuid().ToString("N") + ".tmp");
+                if (!Directory.Exists(directoryChildPath))
+                {
+                    Directory.CreateDirectory(directoryChildPath);
+                }
+
+                filePath = Path.Combine(directoryChildPath, Guid.NewGuid().ToString("N") + ".tmp");
             }
             catch
             {
