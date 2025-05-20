@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SBRW.Nancy
+﻿namespace SBRW.Nancy
 {
     /// <summary>
     /// Default implementation of <see cref="IRootPathProvider"/>.
@@ -11,13 +9,10 @@ namespace SBRW.Nancy
         /// Returns the root folder path of the current Nancy application.
         /// </summary>
         /// <returns>A <see cref="string"/> containing the path of the root folder.</returns>
+        /// <remarks><see href="https://github.com/aspnet/Announcements/issues/237">A valid non-empty application name must be provided.</see></remarks>
         public string GetRootPath()
         {
-#if NETSTANDARD2_0_OR_GREATER
-            return Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath;
-#else
-            return AppDomain.CurrentDomain.BaseDirectory;
-#endif
+            return System.AppDomain.CurrentDomain.BaseDirectory;
         }
     }
 }
