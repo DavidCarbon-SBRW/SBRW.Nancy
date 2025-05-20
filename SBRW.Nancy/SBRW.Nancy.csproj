@@ -7,7 +7,7 @@
 		<PackageIconUrl>https://raw.githubusercontent.com/DavidCarbon-SBRW/SBRW.Nancy/development/SBRW.Nancy/Resources/Icon/Logo-Full-Size.png</PackageIconUrl>
 		<Description>Nancy is a lightweight web framework for the .Net platform, inspired by Sinatra. Nancy aim at delivering a low ceremony approach to building light, fast web applications.</Description>
 		<PackageTags>Nancy</PackageTags>
-		<Version>2.1.2</Version>
+		<Version>2.1.3</Version>
 		<Company>Nancy</Company>
 		<Authors>Andreas Hakansson, Steven Robbins and Contributors</Authors>
 		<NeutralLanguage>en</NeutralLanguage>
@@ -36,8 +36,8 @@
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net8.0' ">
-		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.1" />
-		<PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.2" />
+		
 	</ItemGroup>
 
 	<ItemGroup>
